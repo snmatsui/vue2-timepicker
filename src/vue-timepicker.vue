@@ -15,7 +15,11 @@ export default {
     format: {type: String},
     minuteInterval: {type: Number},
     secondInterval: {type: Number},
-    id: {type: String}
+    id: {type: String},
+    secondLabel: {type:String},
+    hourLabel: {type:String},
+    minuteLabel: {type:String},
+    apmLabel: {type:String},
   },
 
   data () {
@@ -60,6 +64,18 @@ export default {
         return true
       }
       return false
+    },
+    hourText () {
+      return this.hourLabel?this.hourLabel:this.hourType;
+    },
+    minuteText () {
+      return this.minuteLabel?this.minuteLabel:this.minuteType;
+    },
+    secondText () {
+      return this.secondLabel?this.secondLabel:this.secondType;
+    },
+    apmText () {
+      return this.apmLabel?this.apmLabel:this.apmType;
     }
   },
 
@@ -379,19 +395,19 @@ export default {
   <div class="dropdown" v-show="showDropdown">
     <div class="select-list">
       <ul class="hours">
-        <li class="hint" v-text="hourType"></li>
+        <li class="hint" v-text="hourText"></li>
         <li v-for="hr in hours" v-text="hr" :class="{active: hour === hr}" @click.stop="select('hour', hr)"></li>
       </ul>
       <ul class="minutes">
-        <li class="hint" v-text="minuteType"></li>
+        <li class="hint" v-text="minuteText"></li>
         <li v-for="m in minutes" v-text="m" :class="{active: minute === m}" @click.stop="select('minute', m)"></li>
       </ul>
-      <ul class="seconds" v-if="secondType">
+      <ul class="seconds" v-if="secondText">
         <li class="hint" v-text="secondType"></li>
         <li v-for="s in seconds" v-text="s" :class="{active: second === s}" @click.stop="select('second', s)"></li>
       </ul>
       <ul class="apms" v-if="apmType">
-        <li class="hint" v-text="apmType"></li>
+        <li class="hint" v-text="apmText"></li>
         <li v-for="a in apms" v-text="a" :class="{active: apm === a}" @click.stop="select('apm', a)"></li>
       </ul>
     </div>
